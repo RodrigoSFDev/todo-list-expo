@@ -60,7 +60,7 @@ export default function App() {
       <View style={styles.lista}>
   <Text>Lista de Tarefas:</Text>
   {tarefas.map((tarefa) => (
-    <View key={tarefa.id} style={styles.tarefa}>
+    <View key={tarefa.id} style={styles.listaTarefa}>
       {tarefa.editando ? (
         // Renderizar input para ediçãor
         <TextInput
@@ -72,8 +72,9 @@ export default function App() {
         />
       ) : (
         // Renderizar texto da tarefa
-        <Text>{tarefa.texto}</Text>
+        <Text style={styles.textoTarefa}>{tarefa.texto}</Text>
       )}
+      <View style={styles.boxBtn}>
       <TouchableOpacity
         onPress={() => handleEditToggle(tarefa.id)}
       >
@@ -86,6 +87,7 @@ export default function App() {
       >
         <Text style={styles.excluir}>Excluir</Text>
       </TouchableOpacity>
+      </View>
     </View>
   ))}
 </View>
@@ -110,11 +112,18 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     margin: 20,
     padding: 10,
-    width: '60%',
+    width: '70%',
   },
   boxTarefa: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+  },
+  listaTarefa: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: 10,
+    shadowOffset: { width: 0, height: 1 },
+
   },
   btnAdd: {
     width: 110,
@@ -140,5 +149,13 @@ const styles = StyleSheet.create({
   },
   excluir: {
     color: 'red',
+  },
+  boxBtn: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  textoTarefa: {
+    fontSize: 16,
+    maxWidth: '70%', // Defina a largura máxima desejada
   },
 });
