@@ -1,22 +1,40 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import uuid from 'react-native-uuid';
+import AsyncStorage  from '@react-native-async-storage/async-storage';
 
 export default function App() {
   const [tarefas, setTarefas] = useState([]);
   const [novoTexto, setNovoTexto] = useState("");
-  function handleAdd() {
+
+  useEffect(() => {
+    async function loadData() {
+      const response = await AsyncStorage.getItem('tarefas');
+      const storageTarefas = response ? JSON.parse(response) : [];
+      setTarefas(storageTarefas);
+    }
+    loadData();
+  }, []);
+  useEffect(() => {
+    async function updateTarefas() {
+      await AsyncStorage.setItem('tarefas', JSON.stringify(tarefas));
+    }
+    updateTarefas();
+  }, [tarefas]);
+  async function handleAdd() {
     if (novoTexto === "") {
       return;
     }
+    const id = uuid.v4();
   
     const novaTarefa = {
-      id: Date.now(),
+      id,
       texto: novoTexto,
       editando: false, 
     };
-    console.log(novaTarefa);
-  
+    
     setTarefas([...tarefas, novaTarefa]);
+    await AsyncStorage.setItem('tarefas', JSON.stringify(tarefas));
     setNovoTexto("");
   }
 
@@ -119,10 +137,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   listaTarefa: {
+    width: '90%',
+    height: 'auto',
+    alignSelf: 'center',
+    backgroundColor: 'white',
     flexDirection: 'row',
     justifyContent: 'space-between',
     margin: 10,
-    shadowOffset: { width: 0, height: 1 },
+    elevation: 10,
+    padding: 10,
 
   },
   btnAdd: {
