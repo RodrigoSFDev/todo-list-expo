@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import uuid from 'react-native-uuid';
 import AsyncStorage  from '@react-native-async-storage/async-storage';
 
@@ -62,7 +62,7 @@ export default function App() {
     setTarefas(novasTarefas);
   }
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.titulo}>TO DO LIST</Text>
       <View style={styles.boxTarefa}>
         <TextInput
@@ -74,9 +74,9 @@ export default function App() {
           <Text style={{ color: '#fff' }}>ADICIONAR</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.linha}></View>
-      <View style={styles.lista}>
   <Text>Lista de Tarefas:</Text>
+      <View style={styles.linha}></View>
+      <ScrollView style={styles.lista}>
   {tarefas.map((tarefa) => (
     <View key={tarefa.id} style={styles.listaTarefa}>
       {tarefa.editando ? (
@@ -108,8 +108,8 @@ export default function App() {
       </View>
     </View>
   ))}
-</View>
-    </View>
+</ScrollView>
+    </SafeAreaView>
   );
 }
 
