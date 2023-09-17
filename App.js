@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
     margin: 10,
     elevation: 10,
     padding: 10,
+    borderRadius: 10,
 
   },
   btnAdd: {
@@ -175,6 +176,8 @@ const styles = StyleSheet.create({
   },
   boxBtn: {
     flexDirection: 'row',
+    alignItems: 'center',
+    height: '100%',
     justifyContent: 'space-around',
   },
   textoTarefa: {
